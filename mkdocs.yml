@@ -1,0 +1,71 @@
+site_name: "pypiezosystemsjena"
+site_author: "Peter Thomas Barrow"
+
+repo_name: "Free-Space-QKD-Lab-HWU/pypiezosystemsjena"
+repo_url: "https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena"
+
+copyright: Copyright © 2024 Free-Space-QKD-Lab-HWU
+
+theme:
+  name: "material"
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - navigation.instant
+
+  palette:
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: amber
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: amber
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - footnotes
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [psj/*]
+          options:
+            docstring_section_style: list
+            merge_init_into_class: true
+            show_root_heading: true
+            separate_signature: true
+            show_signature_annotations: true
+            show_category_heading: true
+            summary: true
+
+nav:
+  - "Home": index.md
+  - "API Reference": api.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena
