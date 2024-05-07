@@ -1,0 +1,12 @@
+[project]
+name = "pypiezosystemsjena"
+version = "0.1.0"
+description = "Python wrapper for Piezosystems Jena NV200D/Net controllers"
+authors = [
+    {name = "Peter Thomas Barrow", email = "peter.barrow.93@gmail.com"}
+]
+readme = "README.md"
+
+[build-system]
+requires = ["wheel", "serial", "telnetlib"]
+build-backend = "setuptools.build_meta"
