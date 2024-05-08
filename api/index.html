@@ -400,6 +400,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.list_status_codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      list_status_codes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.current_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      current_status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pypiezosystemsjena.NV200D.current_status" class="md-nav__link">
     <span class="md-ellipsis">
       current_status
@@ -438,9 +456,36 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.fenable" class="md-nav__link">
+    <span class="md-ellipsis">
+      fenable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.initial_actuator_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      initial_actuator_position
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pypiezosystemsjena.NV200D.NV200D.measured_current" class="md-nav__link">
     <span class="md-ellipsis">
       measured_current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.status" class="md-nav__link">
+    <span class="md-ellipsis">
+      status
     </span>
   </a>
   
@@ -536,6 +581,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.list_status_codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      list_status_codes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.current_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      current_status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pypiezosystemsjena.NV200D.current_status" class="md-nav__link">
     <span class="md-ellipsis">
       current_status
@@ -574,9 +637,36 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.fenable" class="md-nav__link">
+    <span class="md-ellipsis">
+      fenable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.initial_actuator_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      initial_actuator_position
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pypiezosystemsjena.NV200D.NV200D.measured_current" class="md-nav__link">
     <span class="md-ellipsis">
       measured_current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.NV200D.NV200D.status" class="md-nav__link">
+    <span class="md-ellipsis">
+      status
     </span>
   </a>
   
@@ -779,6 +869,55 @@
 
 
 
+<h2 id="pypiezosystemsjena.NV200D.list_status_codes" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">pypiezosystemsjena.NV200D.list_status_codes</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">list_status_codes</span><span class="p">(</span><span class="n">status</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+</code></pre></div>
+
+  <div class="doc doc-contents first">
+  
+      <p>Convert status bitset to list of active status codes</p>
+<p>The NV200D controller maintains its status as a 16bit register of bit flags.    For each high bit found in the bit set we return an integer from 0-15 to     represent the relevent status code found.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>status</code></b>
+            (<code>int</code>)
+        –
+        <div class="doc-md-description">
+          <p>result of NV200D.status</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="typing.List">List</span>[int]</code>
+        –
+        <div class="doc-md-description">
+          <p>list of active codes</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
 <h2 id="pypiezosystemsjena.NV200D.current_status" class="doc doc-heading">
           <span class="doc doc-object-name doc-function-name">pypiezosystemsjena.NV200D.current_status</span>
 
@@ -788,6 +927,85 @@
 </code></pre></div>
 
   <div class="doc doc-contents first">
+  
+      <p>Parse NV200D statuse to dictionary of active statuses</p>
+<p>Convert the result of NV200D.status to a dictionary of all status codes     that could be available</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>status</code></b>
+            (<code>int</code>)
+        –
+        <div class="doc-md-description">
+          <p>result of NV200D.status</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code>dict</code>
+        –
+        <div class="doc-md-description">
+          <p>active statuses</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="pypiezosystemsjena.NV200D.current_status" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">pypiezosystemsjena.NV200D.current_status</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">current_status</span><span class="p">(</span><span class="n">status</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
+</code></pre></div>
+
+  <div class="doc doc-contents first">
+  
+      <p>Parse NV200D statuse to dictionary of active statuses</p>
+<p>Convert the result of NV200D.status to a dictionary of all status codes     that could be available</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>status</code></b>
+            (<code>int</code>)
+        –
+        <div class="doc-md-description">
+          <p>result of NV200D.status</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code>dict</code>
+        –
+        <div class="doc-md-description">
+          <p>active statuses</p>
+      </div>
+      </li>
+  </ul>
 
   </div>
 
@@ -852,6 +1070,54 @@
 
 
 
+<h4 id="pypiezosystemsjena.NV200D.NV200D.fenable" class="doc doc-heading">
+          <span class="doc doc-object-name doc-attribute-name">fenable</span>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
+  </span>
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">fenable</span><span class="p">:</span> <span class="nb">bool</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Enable cycling through entire piezo voltage range during startup</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pypiezosystemsjena.NV200D.NV200D.initial_actuator_position" class="doc doc-heading">
+          <span class="doc doc-object-name doc-attribute-name">initial_actuator_position</span>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
+  </span>
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">initial_actuator_position</span><span class="p">:</span> <span class="nb">int</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Initial actuator position after power-up</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
 <h4 id="pypiezosystemsjena.NV200D.NV200D.measured_current" class="doc doc-heading">
           <span class="doc doc-object-name doc-attribute-name">measured_current</span>
 
@@ -867,6 +1133,29 @@
   <div class="doc doc-contents ">
   
       <p>Measured piezo current on each channel</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pypiezosystemsjena.NV200D.NV200D.status" class="doc doc-heading">
+          <span class="doc doc-object-name doc-attribute-name">status</span>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">status</span><span class="p">:</span> <span class="nb">dict</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the current status of the controller</p>
   </div>
 
 </div>
