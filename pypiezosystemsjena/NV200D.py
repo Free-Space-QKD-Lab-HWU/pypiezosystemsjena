@@ -1,7 +1,7 @@
 import serial
 import telnetlib
 from enum import Enum
-from typing import Union, Optional
+from typing import Union, Optional, List, Tuple
 
 
 class Connection(Enum):
@@ -28,13 +28,27 @@ class LoopMode(Enum):
 
 
 def list_status_codes(status: int) -> List[int]:
-    bit_string = bin(status)
+    """
+    Convert status bitset to list of active status codes
+
+    The NV200D controller maintains its status as a 16bit register of bit flags.\
+    For each high bit found in the bit set we return an integer from 0-15 to \
+    represent the relevent status code found.
+
+    Args:
+        status (int): result of NV200D.status
+
+    Returns:
+        (List[int]): list of active codes
+    """
+    bit_string = "{0:016b}".format(status)
     codes = [i for i in range(15, -1, -1) if bit_string[2::] == "1"]
-    return codes.reverse()
+    codes.reverse()
+    return codes
 
 
 def actuator_connected(status_codes: List[int]) -> bool:
-    return 0 in codes
+    return 0 in status_codes
 
 
 def sensor_type(status_codes: List[int]) -> SensorType:
@@ -89,6 +103,19 @@ def upper_control_value_limit_reached(status_codes: List[int]) -> bool:
 
 
 def current_status(status: int) -> dict:
+    """
+    Parse NV200D statuse to dictionary of active statuses
+
+    Convert the result of NV200D.status to a dictionary of all status codes \
+    that could be available
+
+    Args:
+        status (int): result of NV200D.status
+
+    Returns:
+        (dict): active statuses
+
+    """
     codes = list_status_codes(status)
     status_dict = {
         "actuator connected": actuator_connected(codes),
@@ -106,18 +133,6 @@ def current_status(status: int) -> dict:
     }
 
     return status_dict
-
-
-def socket_write(socket: Union[serial.Serial, telnetlib.Telnet],
-                 command: str, args: Optional[str] = None) -> None:
-    cmd = command + "," + args + "\r"
-    socket.write(cmd.encode("ascii"))
-
-
-def socket_read(socket: Union[serial.Serial, telnetlib.Telnet],
-                command: str, timeout: int) -> str:
-    socket_write(socket, command)
-    return socket.read_until(b"\n", timeout=timeout).decode()
 
 
 class NV200D:
@@ -150,30 +165,79 @@ class NV200D:
 
         self._status = self.status
 
+    def _socket_write(self, command: str, args: Optional[str] = None):
+        cmd = command + "," + args + "\r"
+        n: int = self.connection.write(cmd.encode("ascii"))
+
+    def _socket_read(self, command: str) -> str:
+        self._socket_write(command)
+        return self.connection.read_until(b"\n", timeout=self.timeout).decode()
+
+    def hardware_reset(self) -> None:
+        self._socket_write("reset")
+
+    @property
+    def fenable(self) -> bool:
+        """
+        Enable cycling through entire piezo voltage range during startup
+        """
+        res: int = int(self._socket_read("fenable"))
+        if res is 0:
+            return False
+        return True
+
+    @fenable.setter
+    def fenable(self, enable: bool):
+        arg = "0"
+        if enable:
+            arg = "1"
+        self._socket_write("fenable", arg)
+
+    @property
+    def initial_actuator_position(self) -> int:
+        """
+        Initial actuator position after power-up
+        """
+        pos: int = int(self._socket_read("sinit"))
+        return pos
+
+    @initial_actuator_position.setter
+    def initial_actuator_position(self, position: int):
+        if not ((position >= 0) and (position <= 100)):
+            raise ValueError("position is in percentage, must be 0 <= position <= 100")
+        self._socket_write("sinit", f"{position}")
+
+    def measure(self):
+        result = float(self._socket_read("meas"))
+
     @property
     def measured_current(self) -> Tuple[float, float]:
         """Measured piezo current on each channel"""
-        socket_write(self.connection, "imeas", "0")
-        i0 = socket_read(self.connection, "imeas", self.timeout)
-        socket_write(self.connection, "imeas", "1")
-        i1 = socket_read(self.connection, "imeas", self.timeout)
+        self._socket_write("imeas", "0")
+        i0 = self._socket_read("imeas")
+        self._socket_write("imeas", "1")
+        i1 = self._socket_read("imeas")
         return (i0, i1)
 
     @property
     def control_mode(self) -> ControlMode:
         """Access control mode of NV200D"""
-        result: int = int(socket_read(self.connection, "ctrlmode", self.timeout))
+        result: int = int(self._socket_read("ctrlmode"))
         return Connection(result)
 
     @control_mode.setter
     def control_mode(self, mode: ControlMode):
-        socket_write(self.connection, "ctrlmode", f"{mode.value}")
+        self._socket_write("ctrlmode", f"{mode.value}")
 
     @property
     def temperature(self) -> float:
         """Heat sink temperature"""
-        return float(socket_read(self.connection, "temp", self.timeout))
+        return float(self._socket_read("temp"))
 
     @property
-    def status(self) -> Status:
-        self._status = socket_read(self.connection, "stat", self.timeout)
+    def status(self) -> dict:
+        """
+        Get the current status of the controller
+        """
+        self._status = self._socket_read("stat")
+        return current_status(self._status)

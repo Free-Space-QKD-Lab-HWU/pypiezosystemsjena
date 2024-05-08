@@ -6,12 +6,13 @@ authors = [
     {name = "Peter Thomas Barrow", email = "peter.barrow.93@gmail.com"}
 ]
 readme = "README.md"
-dependencies = ["serial", "telnetlib"]
+dependencies = ["pyserial", "telnetlib"]
 license = {file = "LICENSE"}
 
 [project.urls]
 Repository = "https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git"
 Issues = "https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena/issues"
+Documentation = "https://free-space-qkd-lab-hwu.github.io/pypiezosystemsjena/"
 
 [build-system]
 requires = ["wheel", "mkdocs", "mkdocs-material", "mkdocstrings"]
