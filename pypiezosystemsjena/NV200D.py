@@ -3,6 +3,14 @@ import telnetlib
 from enum import Enum
 from typing import Union, Optional, List, Tuple
 
+__all__ = [
+    "Connection", "ControlMode", "SensorType", "LoopMode", "ModulationSource",
+    "MonitorSource", "ArbitraryWaveformGeneratorRun", "DataRecorderBuffer",
+    "DataRecorderSource", "DataRecorderStartMode", "TriggerInputFunction",
+    "TriggerEdge", "SPIMonitor", "SPIControlLoopInterupt", "SPISetpoint",
+    "NV200D"
+]
+
 
 class Connection(Enum):
     usb = 1
@@ -64,7 +72,7 @@ class DataRecorderSource(Enum):
     piezo_voltage = 2
     position_error = 3
     abs_position_error = 4
-    piezo_position = 5
+    piezo_position_2 = 5
     piezo_current_1 = 6
     piezo_current_2 = 7
 
@@ -876,3 +884,6 @@ class NV200D:
     @spi_read_last_setpoint.setter
     def spi_read_last_setpoint(self, value: SPISetpoint):
         self._socket_write("spis", f"{value.value}")
+
+
+

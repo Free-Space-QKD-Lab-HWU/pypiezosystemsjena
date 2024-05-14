@@ -4,7 +4,7 @@ Wrapper/interface to control PSJ NV200D/Net piezo drivers
 
 
 ``` python
-import pypiezosystemsjena.NV200D as psj
+import pypiezosystemsjena as psj
 
 nv = psj.NV200D(psj.Connection.usb, port="/dev/ttyUSB1")
 
