@@ -15,5 +15,10 @@ Issues = "https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena/issues"
 Documentation = "https://free-space-qkd-lab-hwu.github.io/pypiezosystemsjena/"
 
 [build-system]
-requires = ["wheel", "mkdocs", "mkdocs-material", "mkdocstrings"]
+requires = ["setuptools", "wheel", "mkdocs", "mkdocs-material", "mkdocstrings"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pypiezosystemsjena"]
+exclude = ["site", "testing"]

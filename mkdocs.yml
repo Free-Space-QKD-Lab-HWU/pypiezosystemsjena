@@ -3,7 +3,6 @@ site_author: "Peter Thomas Barrow"
 
 repo_name: "Free-Space-QKD-Lab-HWU/pypiezosystemsjena"
 repo_url: "https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena"
-
 copyright: Copyright © 2024 Free-Space-QKD-Lab-HWU
 
 theme:
@@ -19,8 +18,8 @@ theme:
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: amber
-      accent: amber
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-night
         name: Switch to light mode
@@ -28,8 +27,8 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: amber
-      accent: amber
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-sunny
         name: Switch to dark mode
@@ -51,8 +50,9 @@ plugins:
       default_handler: python
       handlers:
         python:
-          paths: [psj/*]
+          #paths: [./pypiezosystemsjena/*]
           options:
+            allow_inspection: true
             docstring_section_style: list
             merge_init_into_class: true
             show_root_heading: true
