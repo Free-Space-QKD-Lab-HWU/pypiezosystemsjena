@@ -381,7 +381,7 @@
 <p>Wrapper/interface to control PSJ NV200D/Net piezo drivers</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pypiezosystemsjena.NV200D</span> <span class="k">as</span> <span class="nn">psj</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pypiezosystemsjena</span> <span class="k">as</span> <span class="nn">psj</span>
 
 <span class="n">nv</span> <span class="o">=</span> <span class="n">psj</span><span class="o">.</span><span class="n">NV200D</span><span class="p">(</span><span class="n">psj</span><span class="o">.</span><span class="n">Connection</span><span class="o">.</span><span class="n">usb</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;/dev/ttyUSB1&quot;</span><span class="p">)</span>
 
