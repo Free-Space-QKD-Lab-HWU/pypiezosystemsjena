@@ -1,6 +1,6 @@
 # PyPiezosystemsJena
 
-Wrapper/interface to control PSJ NV200D/Net piezo drivers
+Wrapper/interface to control PSJ NV200D/Net piezo drivers, [documentation available here](https://free-space-qkd-lab-hwu.github.io/pypiezosystemsjena/)
 
 
 ``` python
