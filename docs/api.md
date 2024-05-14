@@ -1,52 +1,115 @@
 # API Reference
 
-## :::pypiezosystemsjena.NV200D.NV200D
+## :::pypiezosystemsjena.NV200D
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
         show_source: false
 
-## :::pypiezosystemsjena.NV200D.Connection
+##:::pypiezosystemsjena.list_status_codes
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
         show_source: false
 
-## :::pypiezosystemsjena.NV200D.ControlMode
+##:::pypiezosystemsjena.current_status
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
         show_source: false
 
-## :::pypiezosystemsjena.NV200D.SensorType
+##:::pypiezosystemsjena.Connection
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: false
+        members: true
 
-## :::pypiezosystemsjena.NV200D.LoopMode
+##:::pypiezosystemsjena.ControlMode
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: false
+        members: true
 
-## :::pypiezosystemsjena.NV200D.ModulationSource
+##:::pypiezosystemsjena.SensorType
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: true
+        members: true
 
-## :::pypiezosystemsjena.NV200D.MonitorSource
+##:::pypiezosystemsjena.LoopMode
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: true
+        members: true
 
-##:::pypiezosystemsjena.NV200D.list_status_codes
+##:::pypiezosystemsjena.ModulationSource
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: false
+        members: true
 
-##:::pypiezosystemsjena.NV200D.current_status
+##:::pypiezosystemsjena.MonitorSource
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: false
+        members: true
 
-
-## :::pypiezosystemsjena.NV200D.current_status
+##:::pypiezosystemsjena.ArbitraryWaveformGeneratorRun
     options:
+        show_symbol_type_heading: true
         show_root_headings: true
-        show_source: false
+        members: true
+
+##:::pypiezosystemsjena.DataRecorderBuffer
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.DataRecorderSource
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.DataRecorderStartMode
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.TriggerInputFunction
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.TriggerEdge
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.SPIMonitor
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.SPIControlLoopInterupt
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.SPISetpoint
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true
+
+##:::pypiezosystemsjena.LearningCorrectionType
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        members: true

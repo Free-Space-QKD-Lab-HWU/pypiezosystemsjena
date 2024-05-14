@@ -8,16 +8,24 @@ __all__ = [
     "MonitorSource", "ArbitraryWaveformGeneratorRun", "DataRecorderBuffer",
     "DataRecorderSource", "DataRecorderStartMode", "TriggerInputFunction",
     "TriggerEdge", "SPIMonitor", "SPIControlLoopInterupt", "SPISetpoint",
-    "NV200D"
+    "LearningCorrectionType", "list_status_codes", "current_status", "NV200D"
 ]
 
 
 class Connection(Enum):
+    """
+    Connection type for NV200D
+
+    Used to specify use of serial port or network connection
+    """
     usb = 1
     ethernet = 2
 
 
 class ControlMode(Enum):
+    """
+    Active control mode of NV200D
+    """
     pid = 0
     identification = 1
     feedforward = 2
@@ -25,12 +33,18 @@ class ControlMode(Enum):
 
 
 class SensorType(Enum):
+    """
+    Type of sensor fitted to current attached piezo device
+    """
     actuator_without_position_sensor = 0
     capacitve_sensor = 1
     strain_guage_sensor = 2
 
 
 class LoopMode(Enum):
+    """
+    Open or closed loop operation
+    """
     open = 0
     closed = 1
 
@@ -46,6 +60,9 @@ class ModulationSource(Enum):
 
 
 class MonitorSource(Enum):
+    """
+    Source of data for analogue output
+    """
     position_close_loop = 0
     setpoint = 1
     piezo_voltage = 2
@@ -57,16 +74,25 @@ class MonitorSource(Enum):
 
 
 class ArbitraryWaveformGeneratorRun(Enum):
+    """
+    Set whether to start or stop the AWG
+    """
     stop = 0
     start = 1
 
 
 class DataRecorderBuffer(Enum):
+    """
+    Which data buffer to read from
+    """
     a = 0
     b = 1
 
 
 class DataRecorderSource(Enum):
+    """
+    Source of data to be stored in data recorder buffer
+    """
     piezo_position = 0
     setpoint = 1
     piezo_voltage = 2
@@ -78,12 +104,18 @@ class DataRecorderSource(Enum):
 
 
 class DataRecorderStartMode(Enum):
+    """
+    Autostart mode of data recorder
+    """
     off = 0
     set = 1
     grun = 2
 
 
 class TriggerInputFunction(Enum):
+    """
+    Function to run on trigger input
+    """
     none = 0
     awg_start = 1
     awg_step = 2
@@ -93,6 +125,9 @@ class TriggerInputFunction(Enum):
 
 
 class TriggerEdge(Enum):
+    """
+    Edge to trigger on
+    """
     off = 0
     rising = 1
     falling = 2
@@ -100,11 +135,17 @@ class TriggerEdge(Enum):
 
 
 class TriggerOutSource(Enum):
+    """
+    Signal source for trigger out
+    """
     position = 0
     set_point = 1
 
 
 class SPIMonitor(Enum):
+    """
+    Return value for SPI monitor
+    """
     zero = 0
     position_closed_loop = 1
     setpoint = 2
@@ -117,14 +158,29 @@ class SPIMonitor(Enum):
 
 
 class SPIControlLoopInterupt(Enum):
+    """
+    PID control loop interupt source
+    """
     interal = 0
     spi = 1
 
 
 class SPISetpoint(Enum):
+    """
+    Datatype of last received setpoint over SPI
+    """
     hex = 0
     decimal = 1
     stroke_or_voltage = 2
+
+
+class LearningCorrectionType(Enum):
+    """
+    Correction type in frequency domain of itertive learning control method
+    """
+    no_learning = 0
+    offline_identification = 1
+    online_identification = 2
 
 
 def list_status_codes(status: int) -> List[int]:
@@ -885,5 +941,118 @@ class NV200D:
     def spi_read_last_setpoint(self, value: SPISetpoint):
         self._socket_write("spis", f"{value.value}")
 
+    @property
+    def ilc_paramters(self):
+        return self._socket_read("idata")
 
+    @property
+    def ilc_learning_limit(self) -> float:
+        """doc"""
+        return float(self._socket_read("iemin"))
 
+    @ilc_learning_limit.setter
+    def ilc_learning_limit(self, value: float):
+        self._socket_write("iemin", f"{value}")
+
+    @property
+    def ilc_learning_rate(self) -> float:
+        """doc"""
+        return float(self._socket_read("irho"))
+
+    @ilc_learning_rate.setter
+    def ilc_learning_rate(self, value: float):
+        self._socket_write("irho", f"{value}")
+
+    @property
+    def ilc_number_of_basic_scans(self) -> int:
+        """doc"""
+        result: int = int(self._socket_read("in0"))
+
+    @ilc_number_of_basic_scans.setter
+    def ilc_number_of_basic_scans(self, value: int):
+        if (value < 2) or (value > 65535):
+            raise ValueError("Number of scans must be in range 2, 65535")
+        self._socket_read("in0", f"{value}")
+
+    @property
+    def ilc_number_of_subsamples(self) -> int:
+        """doc"""
+        result: int = int(self._socket_read("in1"))
+
+    @ilc_number_of_subsamples.setter
+    def ilc_number_of_subsamples(self, value: int):
+        if (value < 0) or (value > 1024):
+            raise ValueError("Number of scans must be in range 0, 1024")
+        self._socket_read("in1", f"{value}")
+
+    @property
+    def ilc_number_of_frequency_components(self) -> int:
+        """doc"""
+        result: int = int(self._socket_read("inx"))
+
+    @ilc_number_of_frequency_components.setter
+    def ilc_number_of_frequency_components(self, value: int):
+        if (value < 0) or (value > 128):
+            raise ValueError("Number of scans must be in range 0, 128")
+        self._socket_read("inx", f"{value}")
+
+    @property
+    def ilc_piezo_voltage_profile(self):
+        """
+        Piezo voltage profile in time domain
+        """
+        return self._socket_read("iut")
+
+    @property
+    def ilc_piezo_measured_position_profile(self):
+        """
+        Piezo measured_position profile in time domain
+        """
+        return self._socket_read("iyt")
+
+    @property
+    def ilc_piezo_current_profile_1_profile(self):
+        """
+        Piezo current_profile_1 profile in time domain
+        """
+        return self._socket_read("ii1t")
+
+    @property
+    def ilc_piezo_current_profile_2_profile(self):
+        """
+        Piezo current_profile_2 profile in time domain
+        """
+        return self._socket_read("ii2t")
+
+    @property
+    def ilc_learning_function_frequency_domain(self):
+        """
+        Learning function in frequency domain
+        """
+        return self._socket_read("igc")
+
+    @property
+    def ilc_voltage_profile_frequency_domain(self):
+        """
+        Voltage profile in frequency domain
+        """
+        return self._socket_read("iuc")
+
+    @property
+    def ilc_desired_position_profile_frequency_domain(self):
+        """
+        Desired position profile in frequency domain
+        """
+        return self._socket_read("iwc")
+
+    @property
+    def ilc_measured_position_profile_frequency_domain(self):
+        """
+        Measured position profile in frequency domain
+        """
+        return self._socket_read("iyc")
+
+    @property
+    def ilc_correction_type(self) -> LearningCorrectionType:
+        result: int = int(self._socket_read("igt"))
+        return LearningCorrectionType(result)
