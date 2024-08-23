@@ -3,7 +3,6 @@ import telnetlib
 import socket
 from enum import Enum
 from typing import Union, Optional, List, Tuple, Dict
-from dataclasses import dataclass
 
 __all__ = [
     "Connection", "ControlMode", "SensorType", "LoopMode", "ModulationSource",
@@ -11,7 +10,7 @@ __all__ = [
     "DataRecorderSource", "DataRecorderStartMode", "TriggerInputFunction",
     "TriggerEdge", "SPIMonitor", "SPIControlLoopInterupt", "SPISetpoint",
     "LearningCorrectionType", "list_status_codes", "current_status", "NV200D",
-    "find_device", "ControllerID",
+    "find_device",
 ]
 
 
@@ -315,25 +314,10 @@ def check_error(msg: str) -> Optional[str]:
     return errors[error_idx]
 
 
-@dataclass(frozen=True)
-class NetworkConnection:
-    MAC_address: str
-    ip_address: str
-
-
-@dataclass(frozen=True)
-class ControllerID:
-    label: str
-    connection_type: Connection
-    connection_details: Union[str, NetworkConnection]
-
-
-def find_device(mac_address_list: Dict[str, str],
+def find_device(mac_address_list: list,
                 base_ip_address: Optional[str] = None,
                 attempts: Optional[int] = None,
-                timeout: float = 0.5) -> Dict[str, ControllerID]:
-
-    mac_address_list_inverse = {v: k for k, v in mac_address_list.items()}
+                timeout: float = 0.5) -> Dict[str, str]:
 
     if base_ip_address:
         assert sum([1 for char in base_ip_address if char == "."]) == 3, (
@@ -364,47 +348,38 @@ def find_device(mac_address_list: Dict[str, str],
         attempts = 2 * num_devices
 
     data = []
-    for i in range(attempts):
-        recv_bytes = sock.recvfrom(65565)
-        data.append(recv_bytes)
-        if len(data) > num_devices - 1:
-            break
+    try:
+        #while len(data) != num_devices:
+        for i in range(attempts):
+            recv_bytes = sock.recvfrom(65565)
+            data.append(recv_bytes)
+            print(len(data))
+            if len(data) > num_devices - 1:
+                raise TimeoutError
+                break
+        raise TimeoutError
+    except TimeoutError:
+        if not data:
+            print("Timeout occured, no response to broadcast")
 
-    # pairs = {}
-    devices = {}
+    pairs = {}
 
-    for d in data:
-        MAC = str(d[0].hex())[48:].upper()
-        MAC = ":".join(MAC[i:i+2] for i in range(0, 12, 2))
-        IP_ADDR = str(d[1][0])
+    # for d in data:
+        # MAC = str(d[0].hex())[48:].upper()
+        # MAC = ":".join(MAC[i:i+2] for i in range(0, 12, 2))
+        # IP_ADDR = str(d[1][0])
+        # # if we find the target mac address exit the loop
 
-        if len(devices) == num_devices:
-            # return pairs
-            break
+        # if len(pairs.keys()) == num_devices:
+        #     return pairs
 
-        if MAC not in mac_address_list.values():
-            continue
+        # # if MAC in pairs.keys():
+        # #     continue
+        # pairs[MAC] = IP_ADDR
 
-        label = mac_address_list_inverse[MAC]
-        dev = ControllerID(
-            label=label,
-            connection_type=Connection.ethernet,
-            connection_details=NetworkConnection(ip_address=IP_ADDR,
-                                                 MAC_address=MAC)
-        )
+    # sock.close()
 
-        devices[label] = dev
-
-        mac_address_list_inverse.pop(MAC)
-        if len(mac_address_list_inverse) == 0:
-            break
-
-    sock.close()
-
-    return devices
-
-
-# def
+    return None
 
 
 class NV200D:
@@ -430,8 +405,7 @@ class NV200D:
             ```
         === "Search by MAC address"
             ``` python
-            nv = NV200D(psj.Connection.ethernet,
-                        mac_address="aa:bb:cc:dd:ee:ff:gg:hh")
+            nv = NV200D(psj.Connection.ethernet, mac_address="aa:bb:cc:dd:ee:ff:gg:hh")
             ```
     """
 
@@ -451,6 +425,9 @@ class NV200D:
                                             timeout=self.timeout, xonxoff=True)
 
         if connection is Connection.ethernet:
+            if (ip_address is None) and (mac_address is None):
+                raise ValueError
+
             if ip_address is not None:
                 self.ip_address = ip_address
             else:
@@ -466,19 +443,6 @@ class NV200D:
                 self.ip_address, self.network_port)
 
         self._status = self.status
-
-        self.voltage_min = self.lower_voltage_range_limit
-        self.voltage_max = self.upper_voltage_range_limit
-        self.position_min = self.lower_motion_range_limit
-        self.position_max = self.upper_motion_range_limit
-
-        self._loop_mode = self.PID_mode
-        if self._loop_mode == LoopMode.closed:
-            self.range_min = self.position_min
-            self.range_max = self.position_max
-        else:
-            self.range_min = self.voltage_min
-            self.range_max = self.voltage_max
 
     def __del__(self):
         self.connection.close()
@@ -567,41 +531,30 @@ class NV200D:
 
     @set_point.setter
     def set_point(self, position: float):
-        if not ((position >= self.range_min) or (position <= self.range_max)):
+        pos_min = 0
+        pos_max = 0
+
+        # TODO: store these min and max values to save rechecking them
+        if self.status["loop mode"] == LoopMode.open:
+            pos_min = self.lower_voltage_range_limit
+            pos_max = self.upper_voltage_range_limit
+        else:
+            pos_min = self.lower_motion_range_limit
+            pos_max = self.upper_motion_range_limit
+
+        if not ((position >= pos_min) or (position <= pos_max)):
             raise ValueError(
-                f"position in mode: {self.status['loop mode'].name} must be in range {self.range_min} to {self.range_max}")
+                f"position in mode: {self.status['loop mode'].name} must be in range {pos_min} to {pos_max}")
 
         self._socket_write("set", f"{position}")
 
-    def go_to_position(self, position: float):
-
-        assert self._loop_mode == LoopMode.closed, (
-            "Positional setting only available in closed loop control")
-
-        assert position >= self.position_min, (
-            "Position must be >= {self.range_min}")
-
-        assert position <= self.position_max, (
-            "Position must be <= {self.range_max}")
-
-        self._socket_write("set", f"{position}")
-
-    def apply_voltage(self, voltage: float):
-
-        assert self._loop_mode == LoopMode.closed, (
-            "Voltage setting only available in open loop control")
-
-        assert voltage >= self.voltage_min, (
-            "Voltage must be >= {self.range_min}")
-
-        assert voltage <= self.voltage_max, (
-            "Voltage must be <= {self.range_max}")
-
-        self._socket_write("set", f"{voltage}")
+    def go_to_position(self, position: float = None):
+        if position is not None:
+            self._socket_write("set", f"{position}")
+        # return float(self._socket_read("set"))
 
     def measure(self):
         result = float(self._socket_read("meas"))
-        return result
 
     @property
     def measured_current(self) -> Tuple[float, float]:
@@ -701,14 +654,6 @@ class NV200D:
     @PID_mode.setter
     def PID_mode(self, mode: LoopMode):
         self._socket_write("cl", f"{mode.value}")
-
-        self._loop_mode = self.PID_mode
-        if self._loop_mode == LoopMode.closed:
-            self.range_min = self.position_min
-            self.range_max = self.position_max
-        else:
-            self.range_min = self.voltage_min
-            self.range_max = self.voltage_max
 
     @property
     def slew_rate(self) -> float:
