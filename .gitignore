@@ -1,3 +1,6 @@
 NV200D-Python-Examples/
 site/
 testing/
+dist/
+build/
+*.egg-info/
