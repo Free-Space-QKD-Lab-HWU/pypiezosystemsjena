@@ -172,6 +172,12 @@ one shown below.
 
 
 ## Tip-Tilt stages
+Tip-Tilt stages are a common use for these controllers and require that a pair
+of them are used in tandem, one for each axis. Configuration and use of devices
+used in this way can be made simpler by use of the `TipTilt` class.
+Creating a `TipTilt` object can be done as shown below by searching using the
+i.p. addresses of the target devices, here those are found by searching for
+their respective MAC addresses.
 
 !!! example
     ``` python
@@ -201,8 +207,27 @@ one shown below.
 
     # set modulation source as "usb_or_ethernet" to allow serial control of position
     tip_tilt_mirror.modulation_source = ModulationSource.usb_or_ethernet
-
     ```
+
+The two arguments of the `TipTilt` class are identifiers containing a label,
+a connection type and details of the connection. From this it is then made
+convenient to for example connect one axis over serial and the other over
+ethernet should that be required. The identifier has the following structure:
+
+``` python
+@dataclass(frozen=True)
+class ControllerID:
+    label: str
+    connection_type: Connection
+    connection_details: Union[str, NetworkConnection]
+```
+
+As an example, the `TipTilt` object can be made to move in a circular motion.
+For this the motion (or voltage in open-loop operation) ranges are needed for
+the axes. In the case of closed-loop operation this is relatively straight
+forward as the motion range is symmetric about its centre. Here we define our
+angles from 0 to 2$\pi$ and then scale them accordingly. We can then iterate
+through each position and send them those acuator positions to the controller.
 
 !!! example
     ``` python
@@ -220,4 +245,8 @@ one shown below.
 
     for i in range(angles.size):
         tip_tilt_mirror.go_to_position(sine[i], cosine[i])
+
+    # Alternatively you could use zip instead of tracking an index
+    for s, c in zip(sine, cosine): 
+        tip_tilt_mirror.go_to_position(s, c)
     ```
