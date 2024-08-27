@@ -775,6 +775,78 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="TipTilt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.loop_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      loop_mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.modulation_source" class="md-nav__link">
+    <span class="md-ellipsis">
+      modulation_source
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.apply_voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.go_to_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      go_to_position
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2305,6 +2377,78 @@
       TipTilt
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="TipTilt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.loop_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      loop_mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.modulation_source" class="md-nav__link">
+    <span class="md-ellipsis">
+      modulation_source
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.apply_voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypiezosystemsjena.TipTilt.go_to_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      go_to_position
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4413,7 +4557,26 @@
 
     <div class="doc doc-contents ">
 
-      
+      <p>Voltage sent to the controller to apply to the acutator.</p>
+<p>Requires that the the controller is operating in open-loop mode and
+will throw an assertion error otherwise. Voltages passed to this
+function are also required to be within the voltage range of
+controller, these can be found through
+<code>NV200D.lower_voltage_range_limit</code> for the lower limit and
+<code>NV200D.upper_voltage_range_limit</code> for the upper limit.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>voltage</code></b>
+              (<code>float</code>)
+          –
+          <div class="doc-md-description">
+            <p>set point for controller in volts</p>
+          </div>
+        </li>
+    </ul>
 
     </div>
 
@@ -4432,7 +4595,26 @@
 
     <div class="doc doc-contents ">
 
-      
+      <p>Position sent to controller to move the acutator to.</p>
+<p>Requires that the the controller is operating in closed-loop mode and
+will throw an assertion error otherwise. Positions passed to this
+function are also required to be within the movement range of
+controller, these can be found through
+<code>NV200D.lower_motion_range_limit</code> for the lower limit and
+<code>NV200D.upper_motion_range_limit</code> for the upper limit.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>position</code></b>
+              (<code>float</code>)
+          –
+          <div class="doc-md-description">
+            <p>set point for controller in mrad or µm</p>
+          </div>
+        </li>
+    </ul>
 
     </div>
 
@@ -4619,9 +4801,101 @@ Examples for both are given below:</p>
 
 
 
+<h3 id="pypiezosystemsjena.TipTilt-attributes">Attributes</h3>
+
+<div class="doc doc-object doc-attribute">
 
 
 
+<h4 id="pypiezosystemsjena.TipTilt.loop_mode" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">loop_mode</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
+  </span>
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">loop_mode</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">LoopMode</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Control mode both axes are set to</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pypiezosystemsjena.TipTilt.modulation_source" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">modulation_source</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
+  </span>
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">modulation_source</span><span class="p">:</span> <span class="n">ModulationSource</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Modulation source for both axes</p>
+    </div>
+
+</div>
+
+<h3 id="pypiezosystemsjena.TipTilt-functions">Functions</h3>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pypiezosystemsjena.TipTilt.apply_voltage" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">apply_voltage</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">apply_voltage</span><span class="p">(</span><span class="n">voltage_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">voltage_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Set voltage applied to both axes
+Args:
+    voltage_x (float): set point for x-axis
+    voltage_y (float): set point for y-axis</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pypiezosystemsjena.TipTilt.go_to_position" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">go_to_position</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">go_to_position</span><span class="p">(</span><span class="n">position_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">position_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Position to set both axes to
+Args:
+    position_x (float): set point for x-axis
+    position_y (float): set point for y-axis</p>
+
+    </div>
+
+</div>
 
 
 
