@@ -6,6 +6,12 @@
         show_root_headings: true
         show_source: false
 
+## :::pypiezosystemsjena.TipTilt
+    options:
+        show_symbol_type_heading: true
+        show_root_headings: true
+        show_source: false
+
 ##:::pypiezosystemsjena.list_status_codes
     options:
         show_symbol_type_heading: true

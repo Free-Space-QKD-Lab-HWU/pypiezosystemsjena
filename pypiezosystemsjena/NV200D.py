@@ -404,9 +404,6 @@ def find_device(mac_address_list: Dict[str, str],
     return devices
 
 
-# def
-
-
 class NV200D:
 
     """
@@ -417,6 +414,7 @@ class NV200D:
         port (Optional[str]): serial port
         ip_address (Optional[str]): i.p. address to find device
         mac_address (Optional[str]): mac address to search for
+        timout (Optional[float]): timeout for commands over serial connections
 
     Examples:
         Connection to an NV200 can be done via either serial or telnet.
@@ -438,9 +436,10 @@ class NV200D:
     def __init__(self, connection: Connection,
                  port: str = None,
                  ip_address: str = None,
-                 mac_address: str = None):
+                 mac_address: str = None,
+                 timout: float = 0.2):
 
-        self.timeout = 0.2
+        self.timeout = timeout
 
         if connection is Connection.usb:
             if port is None:
@@ -574,6 +573,8 @@ class NV200D:
         self._socket_write("set", f"{position}")
 
     def go_to_position(self, position: float):
+        """
+        """
 
         assert self._loop_mode == LoopMode.closed, (
             "Positional setting only available in closed loop control")
@@ -587,6 +588,8 @@ class NV200D:
         self._socket_write("set", f"{position}")
 
     def apply_voltage(self, voltage: float):
+        """
+        """
 
         assert self._loop_mode == LoopMode.closed, (
             "Voltage setting only available in open loop control")
