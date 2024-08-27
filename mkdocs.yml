@@ -37,7 +37,11 @@ markdown_extensions:
   - attr_list
   - admonition
   - footnotes
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
       slugify: !!python/object/apply:pymdownx.slugs.slugify
@@ -62,7 +66,10 @@ plugins:
             summary: true
 
 nav:
-  - "Home": index.md
+  - Home:
+    - Overview: index.md
+    - License: license.md
+  - Guides: cookbook.md
   - "API Reference": api.md
 
 extra:

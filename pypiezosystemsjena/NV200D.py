@@ -424,12 +424,18 @@ class NV200D:
             ```
         === "I.P. Address"
             ``` python
-            nv = NV200D(psj.Connection.ethernet, port="/dev/ttyUSB0")
+            nv = NV200D(psj.Connection.ethernet, ip_address="192.168.188.71")
             ```
         === "Search by MAC address"
             ``` python
-            nv = NV200D(psj.Connection.ethernet,
-                        mac_address="aa:bb:cc:dd:ee:ff:gg:hh")
+            # i.p. address of network the controller is attached to
+            base_ip_address = "192.168.188.71"
+
+            MAC_address = "00:00:00:00:00:0A"
+
+            nv = NV200D(Connection.ethernet,
+                        ip_address=base_ip_address,
+                        mac_address=MAC_address)
             ```
     """
 
@@ -437,7 +443,7 @@ class NV200D:
                  port: str = None,
                  ip_address: str = None,
                  mac_address: str = None,
-                 timout: float = 0.2):
+                 timeout: float = 0.2):
 
         self.timeout = timeout
 
@@ -456,9 +462,9 @@ class NV200D:
                 ip_address = "255.255.255.255"
 
             if mac_address is not None:
-                dev_addr = find_device(mac_address, ip_address)
-                self.ip_address = dev_addr["ip_address"]
-                self.mac_address = dev_addr["mac_address"]
+                dev_addr = find_device({"dev": mac_address}, ip_address)
+                self.ip_address = dev_addr["dev"]["ip_address"]
+                self.mac_address = dev_addr["dev"]["mac_address"]
 
             self.network_port = 23
             self.connection = telnetlib.Telnet(
