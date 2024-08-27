@@ -574,6 +574,17 @@ class NV200D:
 
     def go_to_position(self, position: float):
         """
+        Position sent to controller to move the acutator to.
+
+        Requires that the the controller is operating in closed-loop mode and
+        will throw an assertion error otherwise. Positions passed to this
+        function are also required to be within the movement range of
+        controller, these can be found through
+        `NV200D.lower_motion_range_limit` for the lower limit and
+        `NV200D.upper_motion_range_limit` for the upper limit.
+
+        Args:
+            position (float): set point for controller in mrad or µm
         """
 
         assert self._loop_mode == LoopMode.closed, (
@@ -589,6 +600,17 @@ class NV200D:
 
     def apply_voltage(self, voltage: float):
         """
+        Voltage sent to the controller to apply to the acutator.
+
+        Requires that the the controller is operating in open-loop mode and
+        will throw an assertion error otherwise. Voltages passed to this
+        function are also required to be within the voltage range of
+        controller, these can be found through
+        `NV200D.lower_voltage_range_limit` for the lower limit and
+        `NV200D.upper_voltage_range_limit` for the upper limit.
+
+        Args:
+            voltage (float): set point for controller in volts
         """
 
         assert self._loop_mode == LoopMode.closed, (

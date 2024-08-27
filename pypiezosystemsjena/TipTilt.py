@@ -115,6 +115,9 @@ class TipTilt:
 
     @property
     def loop_mode(self) -> Dict[str, LoopMode]:
+        """
+        Control mode both axes are set to
+        """
         return {
             self.axis_x_details.label: self.axis_x.PID_mode,
             self.axis_y_details.label: self.axis_y.PID_mode,
@@ -127,6 +130,9 @@ class TipTilt:
 
     @property
     def modulation_source(self) -> ModulationSource:
+        """
+        Modulation source for both axes
+        """
         return {
             self.axis_x_details.label: self.axis_x.modulation_source,
             self.axis_y_details.label: self.axis_y.modulation_source,
@@ -138,9 +144,21 @@ class TipTilt:
         self.axis_y.modulation_source = source
 
     def go_to_position(self, position_x: float, position_y: float):
+        """
+        Position to set both axes to
+        Args:
+            position_x (float): set point for x-axis
+            position_y (float): set point for y-axis
+        """
         self.axis_x.go_to_position(position_x)
         self.axis_y.go_to_position(position_y)
 
-    def apply_voltage(self, position_x: float, position_y: float):
-        self.axis_x.set_position(position_x)
-        self.axis_y.set_position(position_y)
+    def apply_voltage(self, voltage_x: float, voltage_y: float):
+        """
+        Set voltage applied to both axes
+        Args:
+            voltage_x (float): set point for x-axis
+            voltage_y (float): set point for y-axis
+        """
+        self.axis_x.set_voltage(voltage_x)
+        self.axis_y.set_voltage(voltage_y)
