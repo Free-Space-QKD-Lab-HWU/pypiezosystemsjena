@@ -28,9 +28,14 @@ For developers the following should suffice, clone the repo and install the
 library as a development build, this way you can write new features and have
 them available the next time you import the library.
 
+Clone the repository:
 ``` shell
 git clone https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git
 cd pypiezosystemsjena
+```
+
+And then run a development build:
+``` shell
 python3 -m pip install -e .
 ```
 

@@ -414,7 +414,7 @@ class NV200D:
         port (Optional[str]): serial port
         ip_address (Optional[str]): i.p. address to find device
         mac_address (Optional[str]): mac address to search for
-        timout (Optional[float]): timeout for commands over serial connections
+        timeout (Optional[float]): timeout for commands over serial connections
 
     Examples:
         Connection to an NV200 can be done via either serial or telnet.
