@@ -460,6 +460,50 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    <span class="md-ellipsis">
+      About
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -477,8 +521,32 @@
 
 
 <h1 id="pypiezosystemsjena">PyPiezosystemsJena</h1>
-<p>Wrapper/interface to control PSJ NV200D/Net piezo drivers.
-See the <a href="api/">api reference</a> for full details of the package contents.</p>
+<h2 id="about">About</h2>
+<p>PyPiezosystemsJena is a Python library to interface with NV200D/Net controllers
+from Piezosystems Jena. This has been developed as part of the <a href="https://www.quantumcommshub.net/research-community/about-the-hub/phase-2/work-package-5/the-hub-optical-ground-station-hogs/">Hub Optical 
+Ground Station</a>, <em>HOGS</em>, at the Free-Space QKD
+Lab in Heriot-Watt University. The development of this library is for the
+design and control of a fine-steering system for incoming light collected by
+the ground-station.</p>
+<p>The library wraps the various serial commands required to communicate with the
+NV200D controllers and provide a convenient Python class to operate the device.
+Full details of the functionality covered and how to use it can be found in the
+<a href="api/">api reference</a>, examples are also included in the api reference.
+For a more general usage guide please see the <a href="cookbook/">guides section</a>.</p>
+<h2 id="installation">Installation</h2>
+<p>This library is currently not available on PyPi but you can still install it
+via pip with the following: </p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git
+</code></pre></div>
+<h2 id="developing">Developing</h2>
+<p>For developers the following should suffice, clone the repo and install the
+library as a development build, this way you can write new features and have
+them available the next time you import the library.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git
+<span class="nb">cd</span><span class="w"> </span>pypiezosystemsjena
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
+<h2 id="quick-start">Quick Start</h2>
 <p>A connection to a Piezosystems Jena NV200D/Net can be opened as follows:</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
@@ -489,7 +557,8 @@ See the <a href="api/">api reference</a> for full details of the package content
 <span class="nb">print</span><span class="p">(</span><span class="n">nv</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<p>If the above is successful you should see the following, good luck!</p>
+<p>If the above is successful you should see the following, good luck!
+<em>P.S. don't forget to check the <a href="cookbook/">guides</a> for usage tips.</em></p>
 <div class="admonition success">
 <p class="admonition-title">Success</p>
 <div class="highlight"><pre><span></span><code>NV200D attached on /dev/ttyUSB0
