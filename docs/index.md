@@ -1,8 +1,42 @@
 # PyPiezosystemsJena
 
-Wrapper/interface to control PSJ NV200D/Net piezo drivers.
-See the [api reference](api.md) for full details of the package contents.
+## About
+PyPiezosystemsJena is a Python library to interface with NV200D/Net controllers
+from Piezosystems Jena. This has been developed as part of the [Hub Optical 
+Ground Station](https://www.quantumcommshub.net/research-community/about-the-hub/phase-2/work-package-5/the-hub-optical-ground-station-hogs/), *HOGS*, at the Free-Space QKD
+Lab in Heriot-Watt University. The development of this library is for the
+design and control of a fine-steering system for incoming light collected by
+the ground-station.
 
+The library wraps the various serial commands required to communicate with the
+NV200D controllers and provide a convenient Python class to operate the device.
+Full details of the functionality covered and how to use it can be found in the
+[api reference](api.md), examples are also included in the api reference.
+For a more general usage guide please see the [guides section](cookbook.md).
+
+## Installation
+This library is currently not available on PyPi but you can still install it
+via pip with the following: 
+
+``` shell
+pip install git+https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git
+```
+
+
+## Developing
+For developers the following should suffice, clone the repo and install the
+library as a development build, this way you can write new features and have
+them available the next time you import the library.
+
+``` shell
+git clone https://github.com/Free-Space-QKD-Lab-HWU/pypiezosystemsjena.git
+cd pypiezosystemsjena
+python3 -m pip install -e .
+```
+
+
+
+## Quick Start
 A connection to a Piezosystems Jena NV200D/Net can be opened as follows:
 !!! example
     ``` python
@@ -14,6 +48,7 @@ A connection to a Piezosystems Jena NV200D/Net can be opened as follows:
 
     ```
 If the above is successful you should see the following, good luck!
+*P.S. don't forget to check the [guides](cookbook.md) for usage tips.*
 !!! success
     ```
     NV200D attached on /dev/ttyUSB0
