@@ -3669,7 +3669,13 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">NV200D</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mac_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">NV200D</span><span class="p">(</span>
+    <span class="n">connection</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span>
+    <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ip_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">mac_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3782,7 +3788,9 @@
   </span>
 
 </h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">PID_feedforward_control_amplification</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">PID_feedforward_control_amplification</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span>
+<span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3913,7 +3921,9 @@
   </span>
 
 </h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">data_recorder_source</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">DataRecorderBuffer</span><span class="p">,</span> <span class="n">DataRecorderSource</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">data_recorder_source</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">DataRecorderBuffer</span><span class="p">,</span> <span class="n">DataRecorderSource</span>
+<span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4738,7 +4748,11 @@ controller, these can be found through
 
 
 </h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">read_data_recorder</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="n">DataRecorderBuffer</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">read_data_recorder</span><span class="p">(</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">DataRecorderBuffer</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4812,7 +4826,10 @@ controller, these can be found through
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">TipTilt</span><span class="p">(</span><span class="n">axis_x_connection</span><span class="p">:</span> <span class="n">ControllerID</span><span class="p">,</span> <span class="n">axis_y_connection</span><span class="p">:</span> <span class="n">ControllerID</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">TipTilt</span><span class="p">(</span>
+    <span class="n">axis_x_connection</span><span class="p">:</span> <span class="n">ControllerID</span><span class="p">,</span>
+    <span class="n">axis_y_connection</span><span class="p">:</span> <span class="n">ControllerID</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
