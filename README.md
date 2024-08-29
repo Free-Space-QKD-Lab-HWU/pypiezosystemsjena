@@ -11,8 +11,8 @@ the ground-station.
 The library wraps the various serial commands required to communicate with the
 NV200D controllers and provide a convenient Python class to operate the device.
 Full details of the functionality covered and how to use it can be found in the
-[api reference](api.md), examples are also included in the api reference.
-For a more general usage guide please see the [guides section](cookbook.md).
+[api reference](https://free-space-qkd-lab-hwu.github.io/pypiezosystemsjena/api/), examples are also included in the api reference.
+For a more general usage guide please see the [guides section](https://free-space-qkd-lab-hwu.github.io/pypiezosystemsjena/cookbook/).
 
 ## Installation
 This library is currently not available on PyPi but you can still install it
