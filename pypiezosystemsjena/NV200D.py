@@ -420,11 +420,11 @@ class NV200D:
         Connection to an NV200 can be done via either serial or telnet.
         === "Serial Port"
             ``` python
-            nv = NV200D(psj.Connection.usb, port="/dev/ttyUSB0")
+            nv = NV200D(Connection.usb, port="/dev/ttyUSB0")
             ```
         === "I.P. Address"
             ``` python
-            nv = NV200D(psj.Connection.ethernet, ip_address="192.168.188.71")
+            nv = NV200D(Connection.ethernet, ip_address="192.168.188.71")
             ```
         === "Search by MAC address"
             ``` python

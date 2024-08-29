@@ -19,7 +19,7 @@ Windows this is this instead might be `COM1`.
     ``` python
     from pypiezosystemsjena import NV200D, Connection
 
-    nv200d = NV200D(psj.Connection.usb, port="/dev/ttyUSB1")
+    nv200d = NV200D(Connection.usb, port="/dev/ttyUSB1")
     
     print(nv200d)
         
